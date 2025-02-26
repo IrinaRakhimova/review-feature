@@ -10,7 +10,7 @@ export default function RatingInfo({ reviews }) {
   const rating = calculateRating(reviews);
 
   return (
-    <Box>
+    <Box fullWidth>
       <div className="info-container">
         <Avatar
           alt="Good Specialist"
@@ -18,7 +18,7 @@ export default function RatingInfo({ reviews }) {
           sx={{ width: 56, height: 56 }}
         />
         <div className="info">
-          <Typography variant="h5">Good Specialist</Typography>
+          <Typography variant="h5">Good Specialist | Web Developer</Typography>
           <div className="rating">
             <Star sx={{ color: "#faaf00" }} />
             <Typography>{rating}</Typography>

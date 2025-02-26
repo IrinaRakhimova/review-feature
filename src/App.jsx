@@ -1,4 +1,3 @@
-import "./App.css";
 import "@fontsource/inter";
 import RatingInfo from "./components/rating-info/rating-info";
 import RatingComments from "./components/rating-comments/rating-comments";
@@ -19,12 +18,17 @@ function App() {
   };
 
   return (
-    <div className="container">
+    <div>
       <RatingInfo reviews={reviews} />
-      <div className="main">
-        <RatingComments reviews={reviews} setOpenModal={setOpenModal}/>
-      </div>
-      {openModal && <SuccessModal openModal={openModal} onClose={onClose} addReview={addReview} reviews={reviews} />}
+      <RatingComments reviews={reviews} setOpenModal={setOpenModal} />
+      {openModal && (
+        <SuccessModal
+          openModal={openModal}
+          onClose={onClose}
+          addReview={addReview}
+          reviews={reviews}
+        />
+      )}
     </div>
   );
 }
