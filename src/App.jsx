@@ -1,9 +1,10 @@
-import "@fontsource/inter";
+import { useState } from "react";
+
+import { mockReviews } from "./utils/mockData";
+
 import RatingInfo from "./components/rating-info/rating-info";
 import RatingComments from "./components/rating-comments/rating-comments";
-import { useState } from "react";
-import { mockReviews } from "./utils/mockData";
-import SuccessModal from "./components/modal/modal";
+import ReviewModal from "./components/modal/review-modal";
 
 function App() {
   const [reviews, setReviews] = useState(mockReviews);
@@ -13,20 +14,16 @@ function App() {
     setReviews((prevReviews) => [newReview, ...prevReviews]);
   };
 
-  const onClose = () => {
-    setOpenModal(false);
-  };
-
   return (
     <div>
       <RatingInfo reviews={reviews} />
       <RatingComments reviews={reviews} setOpenModal={setOpenModal} />
       {openModal && (
-        <SuccessModal
+        <ReviewModal
           openModal={openModal}
-          onClose={onClose}
           addReview={addReview}
           reviews={reviews}
+          setOpenModal={setOpenModal}
         />
       )}
     </div>
