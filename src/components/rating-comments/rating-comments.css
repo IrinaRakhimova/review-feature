@@ -1,0 +1,10 @@
+.commentsContainer {
+    min-width: 350px;
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+
+.clientInfo {
+    display: flex;
+    align-items: center;
+}
