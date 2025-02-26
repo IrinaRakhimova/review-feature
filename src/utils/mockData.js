@@ -1,6 +1,6 @@
 export const rawReviews = [
   {
-    avatar: "public/client1.jpg",
+    avatar: "client1.jpg",
     name: "Regular Client",
     date: "20.02.2025",
     service: "Web Application",
@@ -14,7 +14,7 @@ export const rawReviews = [
     },
   },
   {
-    avatar: "public/client2.png",
+    avatar: "client2.png",
     name: "Unhappy Client",
     date: "22.02.2025",
     service: "Chat Bot",
@@ -28,7 +28,7 @@ export const rawReviews = [
     },
   },
   {
-    avatar: "public/client3.jpg",
+    avatar: "client3.jpg",
     name: "New Client",
     date: "23.02.2025",
     service: "Landing Page",
@@ -40,7 +40,7 @@ export const rawReviews = [
     },
   },
   {
-    avatar: "public/client4.jpg",
+    avatar: "client4.jpg",
     name: "Best Client",
     date: "24.02.2025",
     service: "Web Application",
@@ -53,7 +53,7 @@ export const rawReviews = [
     },
   },
   {
-    avatar: "public/client5.jpg",
+    avatar: "client5.jpg",
     name: "Happy Client",
     date: "25.02.2025",
     service: "Landing Page",
@@ -85,6 +85,6 @@ export const mockReviews = rawReviews.map((review) => ({
 
 export const specialistInfo = {
   name: "Good Specialist",
-  avatar: "public/avatar.png",
+  avatar: "avatar.png",
   service: "Web Developer",
 };
