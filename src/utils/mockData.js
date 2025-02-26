@@ -1,7 +1,7 @@
 export const rawReviews = [
   {
-    avatar: "src/assets/client1.jpg",
-    name: "John Doe",
+    avatar: "public/client1.jpg",
+    name: "Regular Client",
     date: "20.02.2025",
     service: "Web Application",
     rating: 4,
@@ -14,8 +14,8 @@ export const rawReviews = [
     },
   },
   {
-    avatar: "src/assets/client2.png",
-    name: "Jane Smith",
+    avatar: "public/client2.png",
+    name: "Unhappy Client",
     date: "22.02.2025",
     service: "Chat Bot",
     rating: 1,
@@ -28,8 +28,8 @@ export const rawReviews = [
     },
   },
   {
-    avatar: "src/assets/client3.jpg",
-    name: "Michael Brown",
+    avatar: "public/client3.jpg",
+    name: "New Client",
     date: "23.02.2025",
     service: "Landing Page",
     rating: 3,
@@ -40,8 +40,8 @@ export const rawReviews = [
     },
   },
   {
-    avatar: "src/assets/client4.jpg",
-    name: "Emily Davis",
+    avatar: "public/client4.jpg",
+    name: "Best Client",
     date: "24.02.2025",
     service: "Web Application",
     rating: 5,
@@ -53,7 +53,7 @@ export const rawReviews = [
     },
   },
   {
-    avatar: "src/assets/client5.jpg",
+    avatar: "public/client5.jpg",
     name: "Happy Client",
     date: "25.02.2025",
     service: "Landing Page",
@@ -68,8 +68,8 @@ export const rawReviews = [
 
 export const formatToStandardDate = (dateStr) => {
   const [day, month, year] = dateStr.split(".");
-  const date = new Date(`${year}-${month}-${day}`); // Convert to YYYY-MM-DD
-  if (isNaN(date.getTime())) return "Invalid Date"; // Handle parsing errors
+  const date = new Date(`${year}-${month}-${day}`); 
+  if (isNaN(date.getTime())) return "Invalid Date"; 
 
   const formattedDay = String(date.getDate()).padStart(2, "0");
   const formattedMonth = String(date.getMonth() + 1).padStart(2, "0");
@@ -85,6 +85,6 @@ export const mockReviews = rawReviews.map((review) => ({
 
 export const specialistInfo = {
   name: "Good Specialist",
-  avatar: "src/assets/avatar.png",
+  avatar: "public/avatar.png",
   service: "Web Developer",
 };
