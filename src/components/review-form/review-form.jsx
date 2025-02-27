@@ -67,6 +67,7 @@ export default function ReviewForm({ addReview, reviews, setIsFormSubmitted }) {
       .padStart(2, "0")}.${today.getFullYear()}`;
     const standardizedDate = formatToStandardDate(formattedDate);
     const newReview = {
+      me: true,
       avatar: "",
       name: "You",
       date: standardizedDate,

@@ -14,10 +14,14 @@ function App() {
     setReviews((prevReviews) => [newReview, ...prevReviews]);
   };
 
+  const deleteReview = (index) => {
+    setReviews((prevReviews) => prevReviews.filter((_, i) => i !== index));
+  };
+
   return (
     <div>
       <RatingInfo reviews={reviews} />
-      <RatingComments reviews={reviews} setOpenModal={setOpenModal} />
+      <RatingComments reviews={reviews} setOpenModal={setOpenModal} deleteReview={deleteReview} />
       {openModal && (
         <ReviewModal
           openModal={openModal}

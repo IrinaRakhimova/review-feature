@@ -1,26 +1,32 @@
 import "./rating-comments.css";
 
 import React, { useState, useEffect, useRef } from "react";
-
 import { Avatar, Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import Divider from "@mui/material/Divider";
 
-export default function RatingComments({ reviews, setOpenModal }) {
+import DeleteDialog from "../delete-dialog/delete-dialog";
+
+export default function RatingComments({
+  reviews,
+  setOpenModal,
+  deleteReview,
+}) {
   const [expanded, setExpanded] = useState(Array(reviews.length).fill(false));
   const [needsSeeMore, setNeedsSeeMore] = useState(
     Array(reviews.length).fill(false)
   );
   const reviewRefs = useRef([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [deleteIndex, setDeleteIndex] = useState(null);
 
   useEffect(() => {
     const newNeedsSeeMore = reviews.map((_, index) => {
       const ref = reviewRefs.current[index];
       return ref ? ref.scrollHeight > 150 : false;
     });
-
     setNeedsSeeMore(newNeedsSeeMore);
   }, [reviews]);
 
@@ -29,7 +35,6 @@ export default function RatingComments({ reviews, setOpenModal }) {
       const [day, month, year] = dateStr.split(".");
       return new Date(`${year}-${month}-${day}`);
     };
-
     return parseDate(b.date) - parseDate(a.date);
   });
 
@@ -43,6 +48,23 @@ export default function RatingComments({ reviews, setOpenModal }) {
 
   const openModalClick = () => {
     setOpenModal(true);
+  };
+
+  const handleOpenDialog = (index) => {
+    setDeleteIndex(index);
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setDeleteIndex(null);
+  };
+
+  const handleDelete = () => {
+    if (deleteIndex !== null) {
+      deleteReview(deleteIndex);
+    }
+    handleCloseDialog();
   };
 
   return (
@@ -64,7 +86,21 @@ export default function RatingComments({ reviews, setOpenModal }) {
         </Button>
         <div>
           {sortedReviews.map((review, index) => (
-            <div key={index}>
+            <div key={index} style={{ position: "relative" }}>
+              {review.me && (
+                <Button
+                  onClick={() => handleOpenDialog(index)}
+                  sx={{
+                    position: "absolute",
+                    top: 5,
+                    right: 5,
+                    color: "red",
+                    zIndex: 100,
+                  }}
+                >
+                  DELETE
+                </Button>
+              )}
               <div
                 ref={(el) => (reviewRefs.current[index] = el)}
                 className="commentsContainer"
@@ -143,6 +179,13 @@ export default function RatingComments({ reviews, setOpenModal }) {
           ))}
         </div>
       </div>
+      {openDialog && (
+        <DeleteDialog
+          openDialog={openDialog}
+          handleDelete={handleDelete}
+          handleCloseDialog={handleCloseDialog}
+        />
+      )}
     </Box>
   );
 }

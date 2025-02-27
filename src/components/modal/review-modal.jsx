@@ -9,7 +9,7 @@ import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
 
-import ReviewForm from "../form/review-form";
+import ReviewForm from "../review-form/review-form";
 
 const style = {
   position: "absolute",
