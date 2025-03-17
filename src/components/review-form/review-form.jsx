@@ -18,6 +18,8 @@ import FormHelperText from "@mui/material/FormHelperText";
 import Star from "@mui/icons-material/Star";
 import { Avatar } from "@mui/material";
 
+import { sendWhatsAppMessage } from "../../utils/whatsAppMessage";
+
 export default function ReviewForm({ addReview, reviews, setIsFormSubmitted }) {
   const [formData, setFormData] = useState({
     positive: "",
@@ -48,7 +50,7 @@ export default function ReviewForm({ addReview, reviews, setIsFormSubmitted }) {
     setServiceError(false);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.rating) {
       setRatingError(true);
@@ -82,6 +84,8 @@ export default function ReviewForm({ addReview, reviews, setIsFormSubmitted }) {
 
     addReview(newReview);
     setIsFormSubmitted(true);
+
+    await sendWhatsAppMessage(newReview);
   };
 
   const rating = calculateRating(reviews);

@@ -19,6 +19,9 @@
     "@reduxjs/toolkit": "^2.5.1",
     "classnames": "^2.5.1",
     "core-js": "^3.38.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "js-cookie": "^3.0.5",
     "lodash-es": "^4.17.21",
     "prop-types": "^15.8.1",
@@ -29,7 +32,8 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.5",
     "redux": "^5.0.1",
-    "redux-thunk": "^3.1.0"
+    "redux-thunk": "^3.1.0",
+    "twilio": "^5.5.0"
   },
   "devDependencies": {
     "@types/node": "^22.13.5",
