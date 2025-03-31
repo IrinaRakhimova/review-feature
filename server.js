@@ -1,39 +1,65 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import twilio from "twilio";
 
 dotenv.config();
 const app = express();
-app.use(cors()); 
+app.use(cors());
 app.use(express.json());
 
-const accountSid = process.env.ACCOUNT_SID;
-const authToken = process.env.AUTH_TOKEN;
-const fromWhatsApp = `whatsapp:${process.env.FROM_NUMBER}`;
-console.log("ACCOUNT_SID:", process.env.ACCOUNT_SID);
-console.log("AUTH_TOKEN:", process.env.AUTH_TOKEN ? "Loaded" : "Missing");
-console.log("FROM_NUMBER:", process.env.FROM_NUMBER);
-console.log("TO_NUMBER:", process.env.TO_NUMBER);
-const client = twilio(accountSid, authToken);
+const whatsappPhoneId = process.env.WHATSAPP_PHONE_ID; 
+const accessToken = process.env.META_ACCESS_TOKEN;
+const recipientPhoneNumber = process.env.TO_NUMBER;
+
+console.log("WHATSAPP_PHONE_ID:", whatsappPhoneId);
+console.log("META_ACCESS_TOKEN:", accessToken ? "Loaded" : "Missing");
+console.log("TO_NUMBER:", recipientPhoneNumber);
 
 app.post("/send-message", async (req, res) => {
-    const { rating, service, feedback } = req.body;
+    const { rating } = req.body;
 
-    const messageBody = `You have a new review! 🎉\n\n⭐ Rating: ${rating}\n📌 Service: ${service}\n💬 General Feedback: ${feedback.general || "No feedback provided."}\n\nWhat did you like: ${feedback.positive || "No positive feedback provided."}\nWhat can be improved: ${feedback.negative || "No negative feedback provided."}`;
+    const apiUrl = `https://graph.facebook.com/v22.0/${whatsappPhoneId}/messages`;
+
+    const messageData = {
+        messaging_product: "whatsapp",
+        to: recipientPhoneNumber,
+        type: "template",
+        template: {
+            name: "review", 
+            language: { code: "en_US" },
+            components: [
+                {
+                    type: "body",
+                    parameters: [
+                        { type: "text", text: rating } 
+                    ]
+                }
+            ]
+        }
+    };
+
     try {
-        const message = await client.messages.create({
-            from: fromWhatsApp,
-            to: `whatsapp:${process.env.TO_NUMBER}`,
-            body: messageBody,
+        const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${accessToken}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(messageData)
         });
-        res.json({ success: true, messageSid: message.sid });
+
+        const result = await response.json();
+        if (response.ok) {
+            res.json({ success: true, messageId: result.messages[0]?.id });
+        } else {
+            console.error("Error sending WhatsApp message:", result);
+            res.status(500).json({ success: false, error: result });
+        }
     } catch (error) {
-        console.error("Error sending WhatsApp message:", error.message);
+        console.error("Network error:", error.message);
         res.status(500).json({ success: false, error: error.message });
     }
 });
 
-// Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

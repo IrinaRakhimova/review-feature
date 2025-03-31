@@ -85,7 +85,7 @@ export default function ReviewForm({ addReview, reviews, setIsFormSubmitted }) {
     addReview(newReview);
     setIsFormSubmitted(true);
 
-    await sendWhatsAppMessage(newReview);
+    await sendWhatsAppMessage(formData.rating);
   };
 
   const rating = calculateRating(reviews);
